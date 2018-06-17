@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 // Filter messages based on the temperature value in the body of the message and the temperature threshold value.
 public static async Task Run(Message messageReceived, IAsyncCollector<Message> output, TraceWriter log)
 {
+    log.Info("Function tiggered!!!");
      const int temperatureThreshold = 25;
      byte[] messageBytes = messageReceived.GetBytes();
      var messageString = System.Text.Encoding.UTF8.GetString(messageBytes);
@@ -16,8 +17,6 @@ public static async Task Run(Message messageReceived, IAsyncCollector<Message> o
      {
          // Get the body of the message and deserialize it
          var messageBody = JsonConvert.DeserializeObject<MessageBody>(messageString);
-
-         log.Info(messageString);
 
          if (messageBody != null && messageBody.machine.temperature > temperatureThreshold)
          {
